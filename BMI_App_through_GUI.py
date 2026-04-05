@@ -5,21 +5,23 @@ from matplotlib import pyplot as plt
 window=tk.Tk()
 window.title("MY BMI App")
 window.geometry("550x800")
-window.configure(bg="lightblue")
+window.configure(bg="#86B1D6")
 data=[]
 names=[]
 bmi=[]
 
-tk.Label(window,text="Enter the Name:",bg="lightblue",font=("Arial",12,"bold")).pack(pady=4)
-name_entry=tk.Entry(window)
+tk.Label(window, text="BMI Calculator",bg="#1D1F20",fg="white",font=("Arial", 16, "bold")).pack(pady=10)
+
+tk.Label(window,text="Enter the Name:",bg="#86B1D6", fg="#161897",font=("Arial",14,"bold")).pack(pady=8)
+name_entry=tk.Entry(window ,width=25,font=("Arial",12))
 name_entry.pack(pady=4)
 
-tk.Label(window,text="Enter the Weight (kg):",bg="lightblue",font=("Arial",12,"bold")).pack(pady=4) #give vertical spacing
-weight_entry=tk.Entry(window)
+tk.Label(window,text="Enter the Weight (kg):",bg="#86B1D6", fg="#161897",font=("Arial",14,"bold")).pack(pady=8) #give vertical spacing
+weight_entry=tk.Entry(window,width=25,font=("Arial",12))
 weight_entry.pack(pady=4)
 
-tk.Label(window,text="Enter the Height (m):",bg="lightblue",font=("Arial",12,"bold")).pack(pady=4)
-height_entry=tk.Entry(window)
+tk.Label(window,text="Enter the Height (m):",bg="#86B1D6", fg="#161897",font=("Arial",14,"bold")).pack(pady=8)
+height_entry=tk.Entry(window,width=25,font=("Arial",12))
 height_entry.pack(pady=4)
 
 def Calculate_BMI():
@@ -42,7 +44,7 @@ def Calculate_BMI():
             writer=csv.writer(file)
             writer.writerow([name,weight,height,round(BMI,2)])
 
-        result_label.config(text=f"{name}, Your BMI is: {round(BMI,2)} ({category})",bg="lightblue",font=("arial",12,"bold"))
+        result_label.config(text=f"{name}, Your BMI is: {round(BMI,2)} ({category})",bg="#EAF4FF", fg="#003366",font=("arial",13,"bold"))
         data.append((name,weight,height,BMI))
         print(data)
         
@@ -55,7 +57,8 @@ def view_history():
         with open("bmi_data.csv","r")as file:
             reader=csv.reader(file)
             for row in reader:
-                history_entry.insert(tk.END,f"Name:{row[0]},Weight:{row[1]},Height:{row[2]},BMI:{row[3]}\n")
+                history_entry.insert(tk.END,f"Name: {row[0]}, Weight: {row[1]}, Height: {row[2]}, BMI: {row[3]}\n")
+
     except FileNotFoundError:
         history_entry.insert(tk.END,"No history found yet")
 
@@ -93,16 +96,16 @@ def clear_fields():
     history_entry.delete("1.0",tk.END)  #delete text widget 1= first line ,0= zero character
     result_label.config(text="")
 
-tk.Button(window,text="Calculate", command=Calculate_BMI,bg="lightpink",font=("Arial",10,"bold")).pack(pady=4)# calculate button
+tk.Button(window,text="Calculate", command=Calculate_BMI,bg="#007BFF", fg="white",font=("Arial",12,"bold"),relief="flat",width=15).pack(pady=10)# calculate button
 
 result_label=tk.Label(window,text="")
 result_label.pack(pady=4)
 
-tk.Button(window,text="View History",command=view_history,bg="lightpink",font=("Arial",10,"bold")).pack(pady=4)#history button
+tk.Button(window,text="View History",command=view_history,bg="#007BFF", fg="white",font=("Arial",12,"bold"),relief="flat",width=15).pack(pady=10)#history button
 
-history_entry=tk.Text(window,height=10,width=60)
-history_entry.pack(pady=8)
-tk.Button(window,text="Analyse",command=trends_analysis,bg="lightpink",font=("Arial",10,"bold")).pack(pady=8)
-tk.Button(window,text="Clear",command=clear_fields,bg="lightpink",font=("Arial",10,"bold")).pack(pady=40)
+history_entry=tk.Text(window,height=10,width=60, bg="#F8F9FA",fg="#333333",font=("Consolas", 10))
+history_entry.pack(pady=15)
+tk.Button(window,text="Analyse",command=trends_analysis,bg="#007BFF", fg="white",font=("Arial",12,"bold"),relief="flat",width=15).pack(pady=8)
+tk.Button(window,text="Clear",command=clear_fields,bg="#007BFF", fg="white",font=("Arial",12,"bold"),relief="flat",width=15).pack(pady=40)
 
 window.mainloop()
